@@ -5,7 +5,9 @@ const taskList = document.getElementById("taskList");
 const todoForm = document.getElementById("todoForm");
 const charCount = document.getElementById("charCount");
 const priorityInput = document.getElementById("priorityInput");
+const dueDateInput = document.getElementById("dueDateInput");
 const filterBtns = document.querySelectorAll(".filter-btn");
+const themeToggle = document.getElementById("themeToggle");
 
 // --- State ---
 let tasks = [];
@@ -20,18 +22,34 @@ function loadTasks() {
   const data = localStorage.getItem("tasks");
   tasks = data ? JSON.parse(data) : [];
 }
+function saveTheme() {
+  localStorage.setItem(
+    "theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+}
+function loadTheme() {
+  const theme = localStorage.getItem("theme");
+  if (theme === "dark") document.body.classList.add("dark");
+}
 
 // --- Utils ---
-function createTaskObj(text, priority) {
+function createTaskObj(text, priority, dueDate) {
   return {
     id: Date.now() + Math.random(),
     text,
     completed: false,
     priority,
+    dueDate,
   };
 }
 function getPriorityClass(priority) {
   return "priority-" + priority;
+}
+function formatDate(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  return d.toLocaleDateString();
 }
 
 // --- Render ---
@@ -71,6 +89,12 @@ function renderTasks() {
     prio.textContent =
       task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
     meta.appendChild(prio);
+    if (task.dueDate) {
+      const due = document.createElement("span");
+      due.className = "due-date";
+      due.textContent = formatDate(task.dueDate);
+      meta.appendChild(due);
+    }
     li.appendChild(meta);
 
     // Actions
@@ -105,7 +129,7 @@ function renderTasks() {
     });
     li.addEventListener("dragover", (e) => {
       e.preventDefault();
-      li.style.background = "#fffbe7";
+      li.style.background = "var(--secondary)";
     });
     li.addEventListener("dragleave", (e) => {
       li.style.background = "";
@@ -130,7 +154,8 @@ todoForm.addEventListener("submit", (e) => {
   const text = taskInput.value.trim();
   if (!text) return;
   const priority = priorityInput.value;
-  tasks.push(createTaskObj(text, priority));
+  const dueDate = dueDateInput.value;
+  tasks.push(createTaskObj(text, priority, dueDate));
   saveTasks();
   renderTasks();
   todoForm.reset();
@@ -188,6 +213,20 @@ filterBtns.forEach((btn) => {
   });
 });
 
+// --- Theme Toggle ---
+function updateThemeIcon() {
+  themeToggle.textContent = document.body.classList.contains("dark")
+    ? "☀️"
+    : "🌙";
+}
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  updateThemeIcon();
+  saveTheme();
+});
+
 // --- Init ---
 loadTasks();
+loadTheme();
+updateThemeIcon();
 renderTasks();
