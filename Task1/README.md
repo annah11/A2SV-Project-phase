@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 # Todo-List
-=======
+
+
 # Todo List App
 
 This is a simple Todo List application built using HTML, CSS, and JavaScript.
@@ -34,4 +34,3 @@ This is a simple Todo List application built using HTML, CSS, and JavaScript.
 
 ### Deleting a Task
 ![Deleting a Task](screenshot5.png)
->>>>>>> bbea5c7 (Initial commit)
