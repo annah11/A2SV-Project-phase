@@ -1,13 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>My to-do liste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List App</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <input type="text" id="taskInput" placeholder="Enter task" />
-    <button id="addTaskButton">Add Task</button>
-    <ul id="taskList"></ul>
+    <div class="todo-app">
+        <header>
+            <h1>Todo List</h1>
+        </header>
+        <form id="todoForm" autocomplete="off">
+            <div class="input-group">
+                <input type="text" id="taskInput" maxlength="100" placeholder="Add a new task..." required />
+                <span id="charCount">0/100</span>
+            </div>
+            <div class="options-group">
+                <select id="priorityInput">
+                    <option value="low">Low Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="high">High Priority</option>
+                </select>
+                <button type="submit" id="addTaskButton">Add Task</button>
+            </div>
+        </form>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        <ul id="taskList" class="task-list"></ul>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
