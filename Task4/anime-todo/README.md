@@ -1,4 +1,4 @@
-# Anime-Inspired ToDo List App
+# React ToDo List App
 
 
 
@@ -12,7 +12,8 @@
 
 1. **Install dependencies:**
     First, open your terminal and run:
-    ```git clone https://github.com/annah11/A2SV-Project-phase.git
+    ```sh
+    git clone https://github.com/annah11/A2SV-Project-phase.git
     ```
 
    ```sh
