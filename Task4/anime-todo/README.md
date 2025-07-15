@@ -29,7 +29,9 @@
 
 ## 🖼️ 
 ### Main screen
-![Main screen](.img/todo.png)
+
+![Main screen](./img/todo.png)
+
 ### editing a Task
 ![editing a Task](./img/edit.png)
 
