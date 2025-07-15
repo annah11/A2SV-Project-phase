@@ -1,0 +1,202 @@
+/* Advanced Anime-inspired ToDo App CSS */
+
+.anime-app {
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+  /* Beautiful anime-style background image (SVG pattern) */
+  background: url('https://www.transparenttextures.com/patterns/stardust.png'),
+    linear-gradient(135deg, #f5d6e6 0%, #c3cfe2 100%);
+  background-size: auto, cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bgMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%, 0% 50%; }
+  100% { background-position: 100% 50%, 100% 50%; }
+}
+
+/* Sparkle animation for anime touch */
+.anime-app::before, .anime-app::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="2" fill="%23fff7"/><circle cx="80" cy="40" r="1.5" fill="%23fff5"/><circle cx="60" cy="80" r="2.5" fill="%23fff8"/><circle cx="40" cy="60" r="1.2" fill="%23fff6"/><circle cx="70" cy="20" r="1.8" fill="%23fff9"/></svg>');
+  opacity: 0.5;
+  animation: sparkleMove 18s linear infinite;
+}
+.anime-app::after {
+  opacity: 0.3;
+  animation-duration: 24s;
+  background-size: 200px 200px;
+}
+@keyframes sparkleMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 200px 400px; }
+}
+
+.anime-header {
+  width: 100%;
+  padding: 2rem 0 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.7);
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+  border-bottom: 2px solid #f5a9b8;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(6px);
+}
+
+.anime-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  color: #f06292;
+  text-shadow: 0 2px 8px #fff, 0 0px 16px #f06292;
+  filter: drop-shadow(0 0 8px #f0629244);
+}
+
+.anime-logo h1 {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-size: 2.5rem;
+  color: #f06292;
+  margin: 0;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #fff, 0 0px 16px #f06292;
+  filter: drop-shadow(0 0 8px #fff7);
+}
+
+.anime-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.85);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(240,98,146,0.15);
+  padding: 2rem 1.5rem 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(8px) saturate(1.2);
+  border: 1.5px solid #f8bbd0;
+}
+
+.anime-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.anime-input {
+  flex: 1;
+  padding: 0.7em 1em;
+  border-radius: 12px;
+  border: 2px solid #f06292;
+  font-size: 1.1em;
+  outline: none;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  box-shadow: 0 2px 8px #f8bbd0;
+  background: #fff0f6;
+  color: #ad1457;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+}
+.anime-input:focus {
+  border-color: #ba68c8;
+  box-shadow: 0 0 0 4px #f3e5f5;
+}
+
+.anime-btn {
+  background: linear-gradient(90deg, #f06292 0%, #ba68c8 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7em 1.3em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #f8bbd0;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  filter: drop-shadow(0 0 8px #ba68c8aa);
+}
+.anime-btn:hover {
+  transform: translateY(-2px) scale(1.05) rotate(-2deg);
+  box-shadow: 0 6px 24px #f06292aa;
+  background: linear-gradient(90deg, #ba68c8 0%, #f06292 100%);
+  filter: drop-shadow(0 0 16px #f06292cc);
+}
+
+.anime-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.anime-item {
+  background: #fff0f6;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px #f8bbd0;
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: fadeInUp 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+  transition: box-shadow 0.3s, background 0.3s;
+  position: relative;
+  z-index: 2;
+  border: 1.5px solid #f3e5f5;
+  backdrop-filter: blur(2px);
+}
+.anime-item.completed {
+  background: #e1bee7;
+  opacity: 0.7;
+  text-decoration: line-through;
+  filter: grayscale(0.3) blur(0.5px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.anime-title {
+  font-size: 1.2em;
+  color: #ad1457;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  letter-spacing: 1px;
+  margin-right: 1.2rem;
+  transition: color 0.3s;
+  text-shadow: 0 2px 8px #fff7, 0 0px 16px #f06292;
+}
+
+.anime-edit, .anime-view {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.anime-edit .anime-input {
+  min-width: 120px;
+}
