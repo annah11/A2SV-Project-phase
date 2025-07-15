@@ -12,8 +12,9 @@
 
 1. **Install dependencies:**
     First, open your terminal and run:
-    ```git clone https://github.com/annah11/A2SV-Project-phase.git```
-    
+    ```git clone https://github.com/annah11/A2SV-Project-phase.git
+    ```
+
    ```sh
    cd anime-todo
    npm install
