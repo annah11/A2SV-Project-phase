@@ -1,7 +1,13 @@
 // import { useState } from 'react'
-import ListGroup from "./components/ListGroup"
-
+// import ListGroup from "./components/ListGroup"
+// import Alert from "./components/Alert";
+import Button from "./components/Button";
 function App() {
+  return (
+    <div> 
+      <Button />
+    </div>
+  // const items = ["New york", "London", "Paris", "Tokyo"];
 
   // return (
     // <div className="container">
@@ -10,7 +16,7 @@ function App() {
     //   </div>
     // </div>
   // )
-  return <div><ListGroup/></div>
-}
+  // return <div><ListGroup items = {items} heading = "Cities" /></div>
+)}
 
 export default App
