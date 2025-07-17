@@ -1,0 +1,121 @@
+/* Cartoon, bouncy, and playful (static) styles */
+
+.contact-form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff url('data:image/svg+xml;utf8,<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><ellipse cx="60" cy="60" rx="40" ry="20" fill="%23a259ff" fill-opacity="0.08"/><ellipse cx="140" cy="100" rx="50" ry="25" fill="%23a259ff" fill-opacity="0.10"/><ellipse cx="100" cy="160" rx="30" ry="15" fill="%23a259ff" fill-opacity="0.12"/></svg>');
+  background-size: 200px 200px;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(162,89,255,0.12), 0 1.5px 0 #a259ff;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-form h2 {
+  margin-bottom: 1.5rem;
+  color: #b410d4;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group label {
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+  color: #a259ff;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 0 #050108;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 2.5px solid #a259ff;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  background: #f9f9f9;
+  transition: border 0.2s, box-shadow 0.2s, transform 0.2s;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+  box-shadow: 0 2px 8px rgba(162,89,255,0.07);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border: 2.5px solid #e0c3fc;
+  outline: none;
+  box-shadow: 0 0 0 3px #e0c3fc44;
+  background: #f3eaff;
+}
+
+.input-error {
+  border: 2.5px solid #e74c3c;
+  background: #fff0f0;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 1.05rem;
+  margin-top: 0.2rem;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+}
+
+.success-message {
+  color: #27ae60;
+  margin-top: 1rem;
+  text-align: center;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+}
+
+.submit-btn {
+  background: linear-gradient(90deg, #880781 60%, #e0c3fc 100%);
+  color: #fff;
+  border: none;
+  padding: 0.9rem 1.4rem;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(162,89,255,0.13);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(90deg, #e0c3fc 60%, #520591 100%);
+  color: #af07d1;
+  transform: scale(1.04);
+  box-shadow: 0 6px 24px #e0c3fc55, 0 2px 8px #a259ff33;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+  background: linear-gradient(90deg, #a259ff 60%, #e0c3fc 100%);
+}
+
+@media (max-width: 500px) {
+  .contact-form-container {
+    padding: 1rem;
+  }
+  .contact-form {
+    gap: 0.8rem;
+  }
+  .contact-form h2 {
+    font-size: 1.4rem;
+  }
+} 

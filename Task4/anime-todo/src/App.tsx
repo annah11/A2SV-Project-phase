@@ -2,6 +2,7 @@ import {FaPen,FaClipboardList} from "react-icons/fa";
 import TodoList from "./components/TodoList";
 import React from "react";
 
+
 const App: React.FC = () => {
   return (
     <div className="App anime-app">

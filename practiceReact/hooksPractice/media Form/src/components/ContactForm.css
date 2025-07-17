@@ -1,0 +1,52 @@
+/* src/components/ContactForm.css */
+.contact-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.7);
+  backdrop-filter: blur(5px);
+  position: relative;
+}
+
+.sakura-bg::before {
+  content: "🌸";
+  position: absolute;
+  font-size: 2rem;
+  top: 10%;
+  left: 20%;
+  animation: float 4s infinite ease-in-out;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+.glow-input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 0.7rem;
+  border: none;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 0 0 10px pink;
+  font-size: 1rem;
+}
+
+.error {
+  color: crimson;
+  font-size: 0.9rem;
+}
+
+.submit-button {
+  background: linear-gradient(to right, #ff9a9e, #fad0c4);
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
