@@ -31,20 +31,21 @@ This project is a simple and responsive Contact Form built with React and TypeSc
 - `src/ContactForm.tsx`: Main Contact Form component
 - `src/ContactForm.css`: Styles for the Contact Form
 - `src/App.tsx`: App entry point rendering the Contact Form
-
 ## Screenshots
+
+### Main
 ![Main](./src/img/main.png)
 
-## Name Req
+### Name Req
 ![Name Req](./src/img/nameReq.png)
 
-## Invalid Email
+### Invalid Email
 ![Invalid Email](./src/img/invalidemail.png)
 
-## Message Req
+### Message Req
 ![Message Req](./src/img/messageReq.png)
 
-## Succesfull
+### Succesfull
 ![succesfull](./src/img/succesfull.png)
 ---
 
