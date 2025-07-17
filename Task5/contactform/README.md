@@ -48,4 +48,4 @@ This project is a simple and responsive Contact Form built with React and TypeSc
 ![succesfull](./src/img/succesfull.png)
 ---
 
-Feel free to customize and enhance the form as needed!
+Made by 'Hannah'
