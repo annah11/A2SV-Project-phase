@@ -1,0 +1,10 @@
+body {
+  background: url('https://i.pinimg.com/736x/c8/af/8a/c8af8a6c0455dee2ac2862559f023a67.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 2rem;
+}
