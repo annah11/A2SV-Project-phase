@@ -6,22 +6,32 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-}
+  --primary-color: #0070f3;
+  --secondary-color: #1db954;
+  --accent-color: #ff4081;
+  --border-color: #eaeaea;
+  --link-color: #0070f3;}
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 36, 37, 38; 
+    --background-end-rgb: 18, 18, 18;
+    --primary-color: #1e90ff;
+    --secondary-color: #1db954;
+    
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    to bottom,
+    rgb(var(--background-start-rgb)),
+    rgb(var(--background-end-rgb))
+  );
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+
 }
