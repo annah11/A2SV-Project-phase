@@ -1,4 +1,4 @@
-# 🧑‍💼 Job Listing Dashboard
+#  👩‍💼  Job Listing Dashboard
 
 A responsive **Job Listing Dashboard** built using **Next.js (App Router)** and **Tailwind CSS**.
 
@@ -48,7 +48,7 @@ Then open `http://localhost:3000` in your browser.
 
 ## 📸 Screenshots
 
-### [Home]
+### Home
 ![home](./src/img/home.jpg)
 
 
