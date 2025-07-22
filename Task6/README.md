@@ -32,35 +32,40 @@ git clone https://github.com/annah11/A2SV-Project-phase.
 cd A2SV-Project-phase/Task6
 ```
 
-2. Install dependencies
+### 2. Install dependencies
+
 ```bash
 npm install
-``
-3. Run the dev server
+```
+
+### 3. Run the dev server
+
 ```bash
 npm run dev
 ```
 
 Then open `http://localhost:3000` in your browser.
 
-📸 Screenshots
-###[home]
+## 📸 Screenshots
+
+### [Home]
 ![home](./src/img/home.jpg)
 
 
 ### Detail
 ![Detail](./src/img/detail.jpg)
 
+## 📦 Technologies Used
 
-📦 Technologies Used
-[Next.js 14 (App Router)]
+- [Next.js 14 (App Router)](https://nextjs.org/docs/app)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-[React]
+---
 
-[Tailwind CSS]
+## 📬 Author
 
-[TypeScript]
+**👤 Annah11**  
+GitHub: [@annah11](https://github.com/annah11)
 
-📬 Author
-👤 Annah11
-GitHub: @annah11
