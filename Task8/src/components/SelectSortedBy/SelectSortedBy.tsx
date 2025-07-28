@@ -1,33 +1,15 @@
-import Select, { SingleValue } from 'react-select';
-import { Dispatch, SetStateAction } from 'react';
+'use client';
+import Select from 'react-select';
 
-interface Option {
-  value: string;
-  label: string;
-}
-
-export default function SelectSortedBy({
-  selectBy,
-}: {
-  selectBy: Dispatch<SetStateAction<number>>;
-}) {
-  const options: Option[] = [
-    { value: '1', label: 'Most relevant' },
-    { value: '2', label: 'View Count' },
-    { value: '3', label: 'Highest Rated' },
+export default function SelectSortedBy() {
+  const options = [
+    { value: 'most-relevant', label: 'Most relevant' },
+    { value: 'newest', label: 'Newest' },
+    { value: 'highest-rated', label: 'Highest Rated' },
   ];
-
-  const handleChange = (selectedOption: SingleValue<Option>) => {
-    if (selectedOption) {
-      selectBy(Number(selectedOption.value));
-    }
-  };
-
   return (
-    <Select
-      options={options}
-      className='h-10 m-1 text-sm outline-none sm:w-52'
-      onChange={handleChange}
-    />
+    <>
+      <Select options={options} className='h-10 m-1 text-sm outline-none md:w-52' />
+    </>
   );
 }

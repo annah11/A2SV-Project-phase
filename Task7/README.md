@@ -20,7 +20,6 @@ This project implements a job posting dashboard using **React**, **Next.js (App 
 
 * Display job postings in reusable cards
 * Detail page for each opportunity
-strat
 
 ---
 
