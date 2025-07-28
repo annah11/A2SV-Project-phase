@@ -20,10 +20,7 @@ This project implements a job posting dashboard using **React**, **Next.js (App 
 
 * Display job postings in reusable cards
 * Detail page for each opportunity
-* Integrated API from backend using Redux Toolkit Query
-* Skeleton loaders for UX while data is loading
-* Graceful 404 page for not found routes
-* Fully responsive design (mobile-first)
+strat
 
 ---
 
