@@ -6,13 +6,15 @@ export default function Button({
   text,
   value,
 }: {
-  background: string;
-  border: string;
-  text: string;
-  value: string;
+  background?: string;
+  border?: string;
+  text?: string;
+  value?: string;
 }) {
   return (
-    <button className={`${background} ${border} ${text} px-4 py-2 rounded`}>
+    <button
+      className={`py-1.5 px-3 mr-2 text-xs  rounded-2xl ${background} ${border} ${text} font-semibold min-w-14 `}
+    >
       {value}
     </button>
   );

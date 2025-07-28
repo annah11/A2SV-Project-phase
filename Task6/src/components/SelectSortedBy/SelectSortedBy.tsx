@@ -1,5 +1,7 @@
-"use client";
-import Select from 'react-select';
+'use client';
+
+import dynamic from 'next/dynamic';
+const Select = dynamic(() => import('react-select'), { ssr: false });
 
 export default function SelectSortedBy() {
   const options = [
@@ -7,9 +9,11 @@ export default function SelectSortedBy() {
     { value: 'newest', label: 'Newest' },
     { value: 'highest-rated', label: 'Highest Rated' },
   ];
+
   return (
-    <>
-      <Select options={options} className='h-10 m-1 text-sm outline-none w-52' />
-    </>
+    <Select
+      options={options}
+      className="h-10 m-1 text-sm outline-none w-52"
+    />
   );
 }

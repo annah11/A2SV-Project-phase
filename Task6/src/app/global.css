@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@layer base {
+    html{
+        font-family:'Epilogue',sans-serif;
+    }
+    h1{
+        @apply my-1 text-2xl font-bold text-slate-800;
+    }
+    button{
+        @apply rounded-md;
+    }
+}
