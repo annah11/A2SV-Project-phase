@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import Email from './Email';
-import Password from './Password';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn, useSession } from 'next-auth/react';
-import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useForm } from "react-hook-form";
+import Email from "./Email";
+import Password from "./Password";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
+import { redirect, useRouter } from "next/navigation";
 
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const LoginFormSchema = z.object({
   email: z
     .string({
-      required_error: 'Email is required',
-      message: 'Email is required',
+      required_error: "Email is required",
+      message: "Email is required",
     })
     .email({
-      message: 'Invalid email',
+      message: "Invalid email",
     })
     .min(6, {
-      message: 'Email is too short',
+      message: "Email is too short",
     }),
   password: z.string().min(8),
 });
@@ -43,83 +43,83 @@ function LoginForm() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         redirect: false,
         email: data.email,
         password: data.password,
-        callbackUrl: '/posts',
+        callbackUrl: "/posts",
       });
       if (!result?.ok) {
-        throw new Error('invalid credentials');
+        throw new Error("invalid credentials");
       }
       // Redirect to /posts after successful login
-      router.push('/posts');
+      router.push("/posts");
     } catch (error) {
-      toast.error('invalid credentials');
+      toast.error("invalid credentials");
     }
   };
 
   return (
-    <div className=' sm:min-w-[450px] max-w-lg shadow-lg rounded-xl p-3 mb-8 pb-14 space-y-5'>
-      <h1 className='text-indigo-900 text-4xl m-5 text-center font-poppins font-[800]'>
+    <div className=" sm:min-w-[450px] max-w-lg shadow-lg rounded-xl p-3 mb-8 pb-14 space-y-5">
+      <h1 className="text-black-900 text-4xl m-5 text-center font-poppins font-[800]">
         Welcome Back
       </h1>
-      <div className='w-full flex justify-between px-5 my-4 mb-5'>
-        <p className='min-w-32 border border-indigo-500'></p>
-        <p className='min-w-32 border border-indigo-500'></p>
+      <div className="w-full flex justify-between px-5 my-4 mb-5">
+        <p className="min-w-32 border border-gray-300"></p>
+        <p className="min-w-32 border border-gray-300"></p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='my-3'>
+        <div className="my-3">
           <label
-            htmlFor='Email'
-            className='block mb-1 font-epilogue text-sm font-[600] text-indigo-900'
+            htmlFor="Email"
+            className="block mb-1 font-epilogue text-sm font-[600] text-indigo-900"
           >
             Email Address
           </label>
           <input
-            type='text'
-            {...register('email')}
-            className='w-full font-[600] font-epilogue outline-none rounded-lg p-2 text-indigo-950 text-sm border border-slate-400'
+            type="text"
+            {...register("email")}
+            className="w-full font-[600] font-epilogue outline-none rounded-lg p-2 text-indigo-950 text-sm border border-slate-400"
           />
-          <p className='text-red-500 text-xs mt-1 font-poppins font-[550] md:max-w-[400px]'>
+          <p className="text-red-500 text-xs mt-1 font-poppins font-[550] md:max-w-[400px]">
             {errors.email?.message}
           </p>
         </div>
-        <div className='my-3'>
+        <div className="my-3">
           <label
-            htmlFor='password'
-            className='block mb-1 font-epilogue text-sm font-[600] text-indigo-900'
+            htmlFor="password"
+            className="block mb-1 font-epilogue text-sm font-[600] text-indigo-900"
           >
             Password
           </label>
           <input
-            type='password'
-            {...register('password')}
-            className='w-full font-[600] font-epilogue outline-none rounded-lg p-2 text-indigo-950 text-sm border border-slate-400'
+            type="password"
+            {...register("password")}
+            className="w-full font-[600] font-epilogue outline-none rounded-lg p-2 text-indigo-950 text-sm border border-slate-400"
           />
-          <p className='text-red-500 text-xs mt-1 font-poppins font-[550] md:max-w-[400px]'>
+          <p className="text-red-500 text-xs mt-1 font-poppins font-[550] md:max-w-[400px]">
             {errors.password?.message}
           </p>
         </div>
         <button
-          type='submit'
-          className='w-full bg-indigo-900 text-white rounded-3xl py-2 font-epilogue font-[700] mt-5 hover:bg-indigo-800 transition-all duration-500'
+          type="submit"
+          className="w-full bg-indigo-900 text-white rounded-3xl py-2 font-epilogue font-[700] mt-5 hover:bg-indigo-800 transition-all duration-500"
         >
           Login
         </button>
-        <p className='text-sm font-epilogue font-medium text-slate-400 mt-2 mx-2'>
+        <p className="text-sm font-epilogue font-medium text-slate-400 mt-2 mx-2">
           {!session ? (
             <>
               {`Already have an account?`}
-              <Link href='/api/auth/signin'>
-                <span className='text-indigo-800 font-[700] ml-1'>Sign In</span>
+              <Link href="/api/auth/signin">
+                <span className="text-indigo-800 font-[700] ml-1">Sign In</span>
               </Link>
             </>
           ) : (
             <>
               {`Don't have an account?`}
-              <Link href='/api/auth/signup'>
-                <span className='text-indigo-800 font-[700] ml-1'>Sign Up</span>
+              <Link href="/api/auth/signup">
+                <span className="text-indigo-800 font-[700] ml-1">Sign Up</span>
               </Link>
             </>
           )}

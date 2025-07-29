@@ -73,17 +73,17 @@ export default function SignUpForm() {
 
   return (
     <div className='px-5 pb-10 bt-5 shadow-2xl rounded-xl relative'>
-      <h1 className='text-indigo-900 text-4xl m-5 text-center font-poppins font-[1000]'>
+      <h1 className='text-black-900 text-4xl m-5 text-center font-poppins font-[1000]'>
         Sign Up Today!
       </h1>
       <div
-        className='flex w-full justify-center border-2 py-1.5 items-center text-indigo-950 border-indigo-300 rounded-md'
+        className='flex w-full justify-center border-2 py-1.5 items-center text-indigo-950 border-gray-400 rounded-md'
         onClick={handleGoogleSignUp}
       >
         <Image src={'/assets/google.png'} width={18} height={18} alt='google' />
         <span className='font-poppins mx-1 font-[600] text-sm'>Sign Up With Google</span>
       </div>
-      <p className='text-[14px] text-indigo-950 font-[600] font-poppins min-w-44 text-center flex justify-center mx-20 left-1/2 before:left-0 before:-z-10 bg-white before:bg-indigo-900 before:h-0.5 overflow-hidden before:mt-1 before:w-full before: before:absolute before:text-start before:items-start mt-5'>
+      <p className='text-[14px] text-gray-400 font-[600] font-poppins min-w-44 text-center flex justify-center mx-20 left-1/2 before:left-0 before:-z-10 bg-white before:bg-gray-400 before:h-0.5 overflow-hidden before:mt-1 before:w-full before: before:absolute before:text-start before:items-start mt-5'>
         Or Sign Up with Google
       </p>
       <form onSubmit={handleSubmit(onSubmit)} className='md:min-w-[350px] sm:min-w-[300px]'>

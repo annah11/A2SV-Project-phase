@@ -1,40 +1,43 @@
-# Job Posting Cards and Dashboard using React
+# 🔐 Task 8 – NextAuth Authentication for Akil Platform
 
-This project implements a job posting dashboard using **React**, **Next.js (App Router)**, **Tailwind CSS**, and **TypeScript**. It is structured using reusable components and integrates data fetching from a backend API using **Redux Toolkit Query**. The app includes a loading skeleton and supports responsiveness for all screen sizes.
-
----
-
-### 📁 Table of Contents
-
-* [🚀 Features](#-features)
-* [🛠️ Installation](#️-installation)
-* [📆 Usage](#-usage)
-* [🧹 Components](#-components)
-* [📡 Redux Toolkit Query](#-redux-toolkit-query)
-* [🖼️ Screenshots](#-screenshots)
-* [👩 Author](#-author)
+This project adds secure user authentication to the **Akil platform** using **Next.js App Router**, **NextAuth.js**, **TypeScript**, and **Tailwind CSS**. It features a custom login form, JWT-based session handling, Google login integration, and secure redirection after sign-in. Form validation is powered by **React Hook Form** and **Zod**.
 
 ---
 
-### 🚀 Features
+## 📁 Table of Contents
 
-* Display job postings in reusable cards
-* Detail page for each opportunity
-* Integrated API from backend using Redux Toolkit Query
-* Skeleton loaders for UX while data is loading
-* Graceful 404 page for not found routes
-* Fully responsive design (mobile-first)
+- [🚀 Features](#-features)
+- [🛠️ Installation](#️-installation)
+- [🔑 Environment Variables](#-environment-variables)
+- [📆 Usage](#-usage)
+- [📂 Project Structure](#-project-structure)
+- [🔐 Auth Flow Overview](#-auth-flow-overview)
+- [🖼️ Screenshots](#-screenshots)
+- [👩 Author](#-author)
 
 ---
 
-### 🛠️ Installation
+## 🚀 Features
+
+- ✅ **Custom login page** with form validation
+- 🔐 **NextAuth.js** integration (Credentials + Google)
+- 🔁 **JWT**-based token/session handling
+- 🔄 Automatic **token refresh**
+- 🔒 Protected pages via `useSession()`
+- 🧾 Error toast feedback using `react-toastify`
+- 💅 Fully styled using **Tailwind CSS**
+- 🌐 Responsive across screen sizes
+
+---
+
+## 🛠️ Installation
 
 1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/annah11/A2SV-Project-phase.git
-   cd Task7
-   ```
+```bash
+git clone https://github.com/annah11/A2SV-Project-phase.git
+cd Task8
+
 
 2. **Install dependencies:**
 
@@ -48,70 +51,49 @@ This project implements a job posting dashboard using **React**, **Next.js (App 
    npm run dev
    ```
 
-   Open [http://localhost:5173](http://localhost:5173) in your browser.
+   Open [http://localhost:3001](http://localhost:3001) in your browser.
 
 ---
 
 ### 📆 Usage
 
-Once running, the application fetches data from the backend and displays it in card format. Click any card to view more detailed information about the job opportunity.
+Go to /login to access the custom login form.
+
+Enter valid credentials (email + password).
+
+If successful, the user is redirected to /posts.
+
+If tokens expire, the app automatically refreshes them using the backend's /refresh endpoint.
+### 🛡️ Authentication Flow
+signIn('credentials') sends email/password to the backend.
+
+Backend responds with accessToken, refreshToken, and expiry.
+
+Tokens are saved to the NextAuth JWT.
+
+Access tokens are refreshed silently before expiry via the backend.
+
+Session info is available via useSession().
 
 ---
 
-### 🧹 Components
 
-The key components located in `src/components/` include:
-
-* `JobCard`: Displays individual job posting
-* `JobList`: Loops and displays job cards
-* `MainPageSkeleton`: Skeleton UI shown during loading
-* `Header`: App header/navigation
-* `SelectSortedBy`: Sort dropdown
-* `About` & `Detail`: Shown on job detail page
-* `Skill`, `Button`, `Date`: UI elements
-* `NotFound`: Custom 404 page
-
----
-
-### 📡 Redux Toolkit Query
-
-The app uses RTK Query to fetch and cache API data from:
-
-```
-https://akil-backend.onrender.com/opportunities/search
-```
-
-Handled via `src/features/api`.
-
----
 
 ### 🖼️ Screenshots
 
-Screenshots are stored in the `public/img` folder.
+Screenshots are stored in the `public/asset` folder.
 
-#### 🧱 Skeleton of landing page
+#### 🧱 signup page
 
-![Skeleton](public/img/landing%20page%20skeloton.jpg)
+![Skelesignupton](public/img/signup.jpg)
 
-#### 🏠 Landing page
+#### 🏠 login page
 
-![Landing](public/img/landing.jpg)
+![login](public/img/welcome.jpg)
 
-#### 🧱 Skeleton of detail page
+#### 🧱 verify page
 
-![Skeleton Detail](public/img/mobile.jpg)
-
-#### 📋 view count 
-
-![view count](public/img/viewcount.jpg)
-
-#### ❌ Not found page
-
-![404](public/img/notfound.jpg)
-
-#### 📱 Responsive on mobile
-
-![Responsive](public/img/mobile.jpg)
+![verify](public/img/verify.jpg)
 
 ---
 
