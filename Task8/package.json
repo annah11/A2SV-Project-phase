@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.0",
+    "@hookform/resolvers": "^5.2.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@tailwindcss/postcss": "^4.1.11",
@@ -30,7 +30,8 @@
     "react-toastify": "^11.0.5",
     "tailwind": "^4.0.0",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.0.13"
   },
   "devDependencies": {
     "@types/node": "^22.1.0",
