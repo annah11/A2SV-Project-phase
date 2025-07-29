@@ -37,7 +37,7 @@ This project adds secure user authentication to the **Akil platform** using **Ne
 ```bash
 git clone https://github.com/annah11/A2SV-Project-phase.git
 cd Task8
-
+```
 
 2. **Install dependencies:**
 
@@ -57,23 +57,23 @@ cd Task8
 
 ### 📆 Usage
 
-Go to /login to access the custom login form.
+1.**Go to /login to access the custom login form.
 
-Enter valid credentials (email + password).
+2.**Enter valid credentials (email + password).
 
-If successful, the user is redirected to /posts.
+3.**If successful, the user is redirected to /posts.
 
-If tokens expire, the app automatically refreshes them using the backend's /refresh endpoint.
+4.**If tokens expire, the app automatically refreshes them using the backend's /refresh endpoint.
 ### 🛡️ Authentication Flow
-signIn('credentials') sends email/password to the backend.
+1.**signIn('credentials') sends email/password to the backend.
 
-Backend responds with accessToken, refreshToken, and expiry.
+2.**Backend responds with accessToken, refreshToken, and expiry.
 
-Tokens are saved to the NextAuth JWT.
+3.**Tokens are saved to the NextAuth JWT.
 
-Access tokens are refreshed silently before expiry via the backend.
+4.**Access tokens are refreshed silently before expiry via the backend.
 
-Session info is available via useSession().
+5.**Session info is available via useSession().
 
 ---
 
