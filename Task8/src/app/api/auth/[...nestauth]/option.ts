@@ -1,8 +1,6 @@
 import NextAuth, {
   NextAuthOptions,
   Session as NextAuthSession,
-  User as NextAuthUser,
-  User,
 } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
@@ -25,10 +23,9 @@ interface CustomSession extends NextAuthSession {
 // write refreshAccessToken function to refresh the access token every 1000 milliseconds
 
 async function refreshAccessToken(token: Token): Promise<Token> {
-  // to refresh the access token, we need to send a request to the server
-  // console.log('refreshing token', token);
   try {
-    const response = await fetch(`/api/auth/refresh`, {
+    // Use absolute URL for server-side fetch
+    const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,12 +33,15 @@ async function refreshAccessToken(token: Token): Promise<Token> {
       body: JSON.stringify({ refreshToken: token.refreshToken }),
     });
 
+    if (!response.ok) throw new Error('Failed to refresh token');
     const data = await response.json();
 
     return {
       ...token,
       accessToken: data.accessToken,
-      accessTokenExpires: (jwtDecode(data.accessToken) as { exp: number }).exp * 1000,
+      refreshToken: data.refreshToken ?? token.refreshToken,
+      accessTokenExpires: (jwtDecode(data.accessToken as string) as { exp: number }).exp * 1000,
+      error: undefined,
     };
   } catch (error) {
     return {
@@ -93,26 +93,34 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET as string,
+  secret: process.env.NEXTAUTH_SECRET || 'default_secret',
   callbacks: {
     // you can callback a function when user is logged in and jwt is created
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn() {
       // console.log('signIn callback', user, account, profile, email, credentials);
       return true;
     },
 
-    async jwt({ token, user }): Promise<any> {
-      // console.log('jwt callback ', token, user);
+    async jwt({ token, user, account }) {
+      // If user just signed in
       if (user) {
-        token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
-        token.accessTokenExpires = (jwtDecode(user.accessToken) as { exp: number }).exp * 1000;
+        token.accessToken = user.accessToken || account?.access_token || '';
+        token.refreshToken = user.refreshToken || account?.refresh_token || '';
+        token.accessTokenExpires = user.accessToken
+          ? (jwtDecode(user.accessToken) as { exp: number }).exp * 1000
+          : Date.now() + 60 * 60 * 1000; // fallback 1 hour
       }
-      if (token && Date.now() < (token.accessTokenExpires as number)) {
+      // If token is still valid, return it
+      if (token.accessToken && Date.now() < (token.accessTokenExpires || 0)) {
         return token;
       }
-      return refreshAccessToken(token as Token);
+      // Otherwise, refresh it
+      if (token.refreshToken) {
+        return refreshAccessToken(token as Token);
+      }
+      return token;
     },
+
     async session({ session, token }) {
       // console.log('session callback ', session, token);
       (session as CustomSession).accessToken = token.accessToken;
