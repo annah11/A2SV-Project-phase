@@ -33,12 +33,6 @@ function LoginForm() {
   const session = useSession();
   const router = useRouter();
 
-  if (session.data) {
-    // redirect('/posts');
-    console.log('redirect user to posts', session);
-    router.push('/posts');
-  }
-
   const {
     register,
     handleSubmit,
@@ -55,16 +49,11 @@ function LoginForm() {
         password: data.password,
         callbackUrl: '/posts',
       });
-      console.log('result from signIn', result);
       if (!result?.ok) {
         throw new Error('invalid credentials');
       }
-      if (result?.ok) {
-        const parsedUrl = new URL(result?.url || '/');
-        const callbackUrl = parsedUrl.searchParams.get('callbackUrl');
-        // console.log('callback url', callbackUrl);
-        // router.push(callbackUrl as string);
-      }
+      // Redirect to /posts after successful login
+      router.push('/posts');
     } catch (error) {
       toast.error('invalid credentials');
     }
