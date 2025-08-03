@@ -9,10 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
-export default function Page() {
-  // const router = useRouter();
-  // const session = useSession();
-  // console.log('session is ', session);
+export default function Page(req: NextRequest) {
 
   return (
     <>

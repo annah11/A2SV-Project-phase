@@ -1,14 +1,14 @@
-import Button from "../Buttons/Button";
+import Button from "./Buttons/Button";
 import { JobPost } from "@/type/type";
 import Image from "next/image";
-import Bookmark from "../Bookmark/Bookmarks";
+import Bookmark from "./Bookmark/Bookmarks";
 import Link from "next/link";
 
-function JobCard({ data }: { data: JobPost }) {
+function OpportunityCard({ data }: { data: JobPost }) {
   return (
-    <div className="flex py-4 p-1 md:px-8 sm:px-4 border-2 rounded-[30px] space-x-2 my-3">
+    <div className="flex py-4 px-4 md:px-8 border-2 rounded-[30px] space-x-4 my-4 max-w-3xl mx-auto items-start">
       {/* Company Logo */}
-      <div className="sm:w-[60px] h-[60px] flex-shrink-0 my-1">
+      <div className="w-[60px] h-[60px] flex-shrink-0 mt-1">
         <Link href={`/opportunities/${data.id}`}>
           <Image
             src={data.logoUrl || "/job1.png"}
@@ -21,7 +21,7 @@ function JobCard({ data }: { data: JobPost }) {
       </div>
 
       {/* Job Info */}
-      <div className="flex-1 space-y-2">
+      <div className="w-full space-y-2">
         <div className="flex justify-between items-start">
           <Link href={`/opportunities/${data.id}`}>
             <h1 className="text-base font-semibold text-slate-800 line-clamp-2 hover:underline">
@@ -84,4 +84,4 @@ function JobCard({ data }: { data: JobPost }) {
   );
 }
 
-export default JobCard;
+export default OpportunityCard;
