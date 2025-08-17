@@ -1,84 +1,62 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import OpportunityCard from "@/components/OpportunityCard";
-import { JobPost } from "@/type/type";
 import Link from "next/link";
+import OpportunityCard from "@/components/OpportunityCard";
+import { getBookmarksRaw, normalizeBookmark } from "@/lib/api/bookmarks";
 
 export default function BookmarksPage() {
   const { data: session, status } = useSession();
-  const [bookmarks, setBookmarks] = useState<JobPost[]>([]);
+  const [bookmarks, setBookmarks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (status !== "authenticated") return;
+    let cancelled = false;
 
-    const fetchBookmarks = async () => {
+    (async () => {
+      setLoading(true);
+      setError(null);
       try {
-        setError(null);
-        const res = await fetch("/api/bookmarks");
-
-        if (!res.ok) {
-          if (res.status === 401) {
-            setError("Please sign in to view bookmarks");
-          } else {
-            setError("Failed to fetch bookmarks. Please try again.");
-          }
-          return;
-        }
-
-        const data = await res.json();
-
-        // Handle different possible response structures
-        let bookmarkData: JobPost[] = [];
-
-        if (Array.isArray(data)) {
-          bookmarkData = data;
-        } else if (data && typeof data === "object") {
-          // Check if data has a nested array (common API pattern)
-          if (data.data && Array.isArray(data.data)) {
-            bookmarkData = data.data;
-          } else if (data.bookmarks && Array.isArray(data.bookmarks)) {
-            bookmarkData = data.bookmarks;
-          } else if (data.items && Array.isArray(data.items)) {
-            bookmarkData = data.items;
-          } else {
-            // Try to find any array in the response
-            for (const key in data) {
-              if (Array.isArray(data[key])) {
-                bookmarkData = data[key];
-                break;
-              }
-            }
-          }
-        }
-
-        setBookmarks(bookmarkData);
-
-        if (bookmarkData.length === 0) {
+        const { list, data } = await getBookmarksRaw();
+        if (cancelled) return;
+        const normalized = list.map(normalizeBookmark).filter((b) => b.id);
+        setBookmarks(normalized);
+        if (normalized.length === 0) {
           setError(
             "No bookmarks found. Try bookmarking some opportunities first!"
           );
         }
-      } catch (error) {
-        console.error("Error fetching bookmarks:", error);
-        setError("Failed to fetch bookmarks. Please try again.");
+      } catch (e: any) {
+        if (cancelled) return;
+        if (e.message === "AUTH_401") {
+          setError("Please sign in to view bookmarks.");
+        } else if (e.message.startsWith("UPSTREAM_")) {
+          setError("Failed to fetch bookmarks. Server error.");
+        } else if (e.message.startsWith("Network error")) {
+          setError("Network error while fetching bookmarks.");
+        } else {
+          setError("Failed to fetch bookmarks. Please try again.");
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
-    };
+    })();
 
-    fetchBookmarks();
+    return () => {
+      cancelled = true;
+    };
   }, [status]);
 
   if (status === "loading" || loading) {
     return (
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="flex justify-center items-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-800"></div>
-          <span className="ml-3 text-gray-600">Loading bookmarks...</span>
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="flex flex-col items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-800"></div>
+          <span className="mt-4 text-lg text-gray-600">
+            Loading bookmarks...
+          </span>
         </div>
       </div>
     );
@@ -86,49 +64,46 @@ export default function BookmarksPage() {
 
   if (!session) {
     return (
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="text-center py-8">
-          <h1 className="text-2xl font-bold text-indigo-900 mb-4">
-            My Bookmarks
-          </h1>
-          <p className="text-red-500 mb-4">Please sign in to view bookmarks.</p>
-          <div className="flex gap-3 justify-center">
-            <a
-              href="/api/auth/signin"
-              className="inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition"
-            >
-              Sign In
-            </a>
-            <Link
-              href="/"
-              className="inline-block px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl transition"
-            >
-              Back to Home
-            </Link>
-          </div>
+      <div className="max-w-6xl mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold text-indigo-900 mb-4">
+          My Bookmarks
+        </h1>
+        <p className="text-gray-600 mb-6">Please sign in to view bookmarks.</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/api/auth/signin"
+            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition text-base sm:text-lg"
+          >
+            Sign In
+          </a>
+          <Link
+            href="/opportunities"
+            className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl transition text-base sm:text-lg"
+          >
+            Browse Opportunities
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      {/* Header with navigation */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-indigo-900">
+    <div className="max-w-6xl mx-auto px-2 sm:px-4 md:px-6 py-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+        <div className="w-full sm:w-auto text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl font-bold text-indigo-900 mb-2">
             My Bookmarked Opportunities
           </h1>
           {bookmarks.length > 0 && (
-            <p className="text-gray-600 mt-2">
-              You have {bookmarks.length} bookmarked job
-              {bookmarks.length !== 1 ? "s" : ""}
+            <p className="text-gray-600 text-base">
+              You have <span className="font-semibold">{bookmarks.length}</span>{" "}
+              bookmarked job{bookmarks.length !== 1 ? "s" : ""}
             </p>
           )}
         </div>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition text-base sm:text-lg w-full sm:w-auto justify-center"
         >
           <svg
             className="w-4 h-4"
@@ -150,30 +125,24 @@ export default function BookmarksPage() {
       {error && (
         <div className="text-center py-8">
           <p className="text-gray-600 mb-4">{error}</p>
-          {error.includes("No bookmarks found") && (
-            <div className="flex gap-3 justify-center">
-              <a
-                href="/opportunities"
-                className="inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition"
-              >
-                Browse Opportunities
-              </a>
-              <Link
-                href="/"
-                className="inline-block px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl transition"
-              >
-                Back to Home
-              </Link>
-            </div>
+          {error.includes("No bookmarks") && (
+            <a
+              href="/opportunities"
+              className="inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition w-full sm:w-auto"
+            >
+              Browse Opportunities
+            </a>
           )}
         </div>
       )}
 
       {!error && bookmarks.length > 0 && (
-        <div className="grid gap-6 md:grid-cols-2">
-          {bookmarks.map((bookmark) => (
-            <OpportunityCard key={bookmark.id} data={bookmark} />
-          ))}
+        <div className="max-w-3xl mx-auto px-2 sm:px-4 md:px-0">
+          <div className="grid gap-6 grid-cols-1">
+            {bookmarks.map((b) => (
+              <OpportunityCard key={b.id} data={b} />
+            ))}
+          </div>
         </div>
       )}
     </div>

@@ -6,16 +6,16 @@ import Link from "next/link";
 
 function JobCard({ data }: { data: JobPost }) {
   return (
-    <div className="flex py-4 p-1 md:px-8 sm:px-4 border-2 rounded-[30px] space-x-2 my-3">
+    <div className="flex flex-col sm:flex-row py-4 px-2 sm:px-4 md:px-8 border-2 rounded-[30px] space-y-2 sm:space-y-0 sm:space-x-4 my-3 mx-auto items-start bg-white transition-shadow hover:shadow-lg">
       {/* Company Logo */}
-      <div className="sm:w-[60px] h-[60px] flex-shrink-0 my-1">
+      <div className="w-[60px] h-[60px] flex-shrink-0 my-1 mx-auto sm:mx-0">
         <Link href={`/opportunities/${data.id}`}>
           <Image
-            src={data.logoUrl || "/job1.png"}
-            alt={`${data.companyName || "Company"} logo`}
+            src={data.logoUrl || "/assets/job1.png"}
+            alt={`${data.orgName || "Company"} logo`}
             width={60}
             height={60}
-            className="object-cover w-full h-full rounded-full"
+            className="block object-cover w-full h-full rounded-full"
           />
         </Link>
       </div>
@@ -24,47 +24,48 @@ function JobCard({ data }: { data: JobPost }) {
       <div className="flex-1 space-y-2">
         <div className="flex justify-between items-start">
           <Link href={`/opportunities/${data.id}`}>
-            <h1 className="text-base font-semibold text-slate-800 line-clamp-2 hover:underline">
+            <h1 className="text-base sm:text-lg font-semibold text-slate-800 line-clamp-2 hover:underline">
               {data.title}
             </h1>
           </Link>
           <Bookmark id={data.id} bookmarked={data.isBookmarked} />
         </div>
 
-        <h3 className="text-xs text-slate-500 font-epilogue">
-          {data.location}
+        <h3 className="text-xs sm:text-sm text-slate-500 font-epilogue">
+          {data.location.join(", ")}
         </h3>
 
-        <p className="text-sm font-medium text-justify font-epilogue text-slate-700 line-clamp-3">
+        <p className="text-sm sm:text-base font-medium text-justify font-epilogue text-slate-700 line-clamp-3">
           {data.description}
         </p>
 
         {/* Tags and Views */}
         <div className="flex flex-wrap items-center gap-2 pt-2">
-          {data.type && (
+          {data.opType && (
             <Button
               background="bg-green-100"
               border=""
               text="text-green-400"
-              value={data.type}
+              value={data.opType}
             />
           )}
-          {data.category && (
-            <Button
-              background="bg-slate-50"
-              border="border border-amber-400"
-              text="text-yellow-500"
-              value={data.category}
-            />
-          )}
-          {data.industry && (
-            <Button
-              background="bg-slate-50"
-              border="border border-indigo-800"
-              text="text-indigo-700"
-              value={data.industry}
-            />
-          )}
+
+          {data.categories &&
+            data.categories.map((cat, idx) => (
+              <Button
+                key={idx}
+                background="bg-slate-50"
+                border="border border-amber-400"
+                text="text-yellow-500"
+                value={cat}
+              />
+            ))}
+          <Button
+            background="bg-[#4640DE]/20"
+            border="border border-[#4640DE]"
+            text="text-[#4640DE]"
+            value="IT"
+          />
 
           {/* Views */}
           <div className="flex items-center text-slate-800 ml-auto">

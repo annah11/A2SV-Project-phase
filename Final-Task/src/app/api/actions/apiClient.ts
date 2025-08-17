@@ -1,11 +1,11 @@
-import axios from 'axios';
-import { authOptions } from '../auth/[...nextauth]/option';
-import { getServerSession } from 'next-auth';
+import axios from "axios";
+import { authOptions } from "../auth/[...nextauth]/option";
+import { getServerSession } from "next-auth";
 
 const apiClient = axios.create({
-  baseURL: 'https://akil-backend.onrender.com',
+  baseURL: "https://akil-backend.onrender.com",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 

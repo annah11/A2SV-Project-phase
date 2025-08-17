@@ -59,7 +59,6 @@ export default function ProfilePage() {
             <p>
               <span className="font-medium">Member since:</span> 2025 (static)
             </p>
-            {/* Add more details or settings here */}
           </div>
         </div>
       </div>

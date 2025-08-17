@@ -1,25 +1,26 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import Email from './Email';
-import Password from './Password';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn, useSession } from 'next-auth/react';
-import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useForm } from "react-hook-form";
+import Email from "./Email";
+import Password from "./Password";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
+import { redirect, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const LoginFormSchema = z.object({
   email: z
     .string({
-      required_error: 'Email is required',
-      message: 'Email is required',
+      required_error: "Email is required",
+      message: "Email is required",
     })
     .email({
-      message: 'Invalid email',
+      message: "Invalid email",
     })
     .min(6, {
-      message: 'Email is too short',
+      message: "Email is too short",
     }),
   password: z.string().min(8),
 });
@@ -29,10 +30,17 @@ type FormData = z.infer<typeof LoginFormSchema>;
 function LoginForm(req: any) {
   const session = useSession();
   const router = useRouter();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
 
   if (session.data) {
     // console.log('redirect user to posts', session);
-    router.push('/opportunities');
+    router.push("/opportunities");
   }
 
   const {
@@ -45,91 +53,91 @@ function LoginForm(req: any) {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         redirect: false,
         email: data.email,
         password: data.password,
       });
       // console.log('result from signIn', result);
       if (!result?.ok) {
-        throw new Error('invalid credentials');
+        throw new Error("invalid credentials");
       }
       if (result?.ok) {
         // console.log('redirecting to ', result?.url);
-        const parsedUrl = new URL(result?.url || '/');
-        const callbackUrl = parsedUrl.searchParams.get('callbackUrl');
+        const parsedUrl = new URL(result?.url || "/");
+        const callbackUrl = parsedUrl.searchParams.get("callbackUrl");
         // console.log('callbackUrl is ', callbackUrl);
-        router.push(callbackUrl || '/opportunities');
+        router.push(callbackUrl || "/opportunities");
       }
     } catch (error) {
-      alert('invalid credentials');
+      alert("invalid credentials");
     }
   };
 
   return (
-    <div className=' sm:min-w-[450px] max-w-lg shadow-lg rounded-xl p-3 mb-8 pb-14 space-y-5'>
-      <h1 className='text-indigo-900 text-4xl m-5 text-center font-poppins font-[800]'>
+    <div className=" sm:min-w-[450px] max-w-lg shadow-lg rounded-xl p-3 mb-8 pb-14 space-y-5">
+      <h1 className="text-indigo-900 text-4xl m-5 text-center font-poppins font-[800]">
         Welcome Back
       </h1>
-      <div className='w-full flex justify-between px-5 my-4 mb-5'>
-        <p className='min-w-32 border border-indigo-500'></p>
-        <p className='min-w-32 border border-indigo-500'></p>
+      <div className="w-full flex justify-between px-5 my-4 mb-5">
+        <p className="min-w-32 border border-indigo-500"></p>
+        <p className="min-w-32 border border-indigo-500"></p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='my-3'>
+        <div className="my-3">
           <label
-            htmlFor='Email'
-            className='block mb-1 font-epilogue text-sm font-[600] text-indigo-900'
+            htmlFor="Email"
+            className="block mb-1 font-epilogue text-sm font-[600] text-indigo-900"
           >
             Email Address
           </label>
           <input
-            type='text'
-            id='email'
-            {...register('email')}
-            className='w-full font-[600] font-epilogue outline-none rounded-lg p-2 text-indigo-950 text-sm border border-slate-400'
+            type="text"
+            id="email"
+            {...register("email")}
+            className="w-full font-[600] font-epilogue outline-none rounded-lg p-2 text-indigo-950 text-sm border border-slate-400"
           />
-          <p className='text-red-500 text-xs mt-1 font-poppins font-[550] md:max-w-[400px]'>
+          <p className="text-red-500 text-xs mt-1 font-poppins font-[550] md:max-w-[400px]">
             {errors.email?.message}
           </p>
         </div>
-        <div className='my-3'>
+        <div className="my-3">
           <label
-            htmlFor='password'
-            className='block mb-1 font-epilogue text-sm font-[600] text-indigo-900'
+            htmlFor="password"
+            className="block mb-1 font-epilogue text-sm font-[600] text-indigo-900"
           >
             Password
           </label>
           <input
-            type='password'
-            id='password'
-            {...register('password')}
-            className='w-full font-[600] font-epilogue outline-none rounded-lg p-2 text-indigo-950 text-sm border border-slate-400'
+            type="password"
+            id="password"
+            {...register("password")}
+            className="w-full font-[600] font-epilogue outline-none rounded-lg p-2 text-indigo-950 text-sm border border-slate-400"
           />
-          <p className='text-red-500 text-xs mt-1 font-poppins font-[550] md:max-w-[400px]'>
+          <p className="text-red-500 text-xs mt-1 font-poppins font-[550] md:max-w-[400px]">
             {errors.password?.message}
           </p>
         </div>
         <button
-          type='submit'
-          id='submit'
-          className='w-full bg-indigo-900 text-white rounded-3xl py-2 font-epilogue font-[700] mt-5 hover:bg-indigo-800 transition-all duration-500'
+          type="submit"
+          id="submit"
+          className="w-full bg-indigo-900 text-white rounded-3xl py-2 font-epilogue font-[700] mt-5 hover:bg-indigo-800 transition-all duration-500"
         >
           Login
         </button>
-        <p className='text-sm font-epilogue font-medium text-slate-400 mt-2 mx-2'>
+        <p className="text-sm font-epilogue font-medium text-slate-400 mt-2 mx-2">
           {!session ? (
             <>
               {`Already have an account?`}
-              <Link href='/api/auth/signin'>
-                <span className='text-indigo-800 font-[700] ml-1'>Sign In</span>
+              <Link href="/api/auth/signin">
+                <span className="text-indigo-800 font-[700] ml-1">Sign In</span>
               </Link>
             </>
           ) : (
             <>
               {`Don't have an account?`}
-              <Link href='/api/auth/signup'>
-                <span className='text-indigo-800 font-[700] ml-1'>Sign Up</span>
+              <Link href="/api/auth/signup">
+                <span className="text-indigo-800 font-[700] ml-1">Sign Up</span>
               </Link>
             </>
           )}
