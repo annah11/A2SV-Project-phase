@@ -13,7 +13,6 @@ import { useEffect } from "react";
 const LoginFormSchema = z.object({
   email: z
     .string({
-      required_error: "Email is required",
       message: "Email is required",
     })
     .email({
@@ -39,7 +38,6 @@ function LoginForm(req: any) {
   }, [status, router]);
 
   if (session.data) {
-    // console.log('redirect user to posts', session);
     router.push("/opportunities");
   }
 
@@ -58,15 +56,12 @@ function LoginForm(req: any) {
         email: data.email,
         password: data.password,
       });
-      // console.log('result from signIn', result);
       if (!result?.ok) {
         throw new Error("invalid credentials");
       }
       if (result?.ok) {
-        // console.log('redirecting to ', result?.url);
         const parsedUrl = new URL(result?.url || "/");
         const callbackUrl = parsedUrl.searchParams.get("callbackUrl");
-        // console.log('callbackUrl is ', callbackUrl);
         router.push(callbackUrl || "/opportunities");
       }
     } catch (error) {
