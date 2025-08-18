@@ -32,8 +32,8 @@ export default function ProfilePage() {
           <Image
             src={user?.image || "/mine.png"}
             alt="User avatar"
-            width={80}
-            height={80}
+            width={90}
+            height={90}
             className="rounded-full object-cover border"
           />
           <div>

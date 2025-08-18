@@ -5,6 +5,7 @@ A comprehensive job board application with advanced bookmark functionality, buil
 ## 🚀 Features
 
 ### ✅ Bookmark Functionality
+
 - **Toggle Bookmark**: Users can bookmark/unbookmark job positions with a single click
 - **Authentication Required**: Only authenticated users can access bookmark features
 - **Real-time Updates**: Bookmark state updates immediately after user interaction
@@ -12,12 +13,14 @@ A comprehensive job board application with advanced bookmark functionality, buil
 - **Error Handling**: Comprehensive error handling with user-friendly messages
 
 ### ✅ Authentication System
+
 - **User Registration**: New users can register with role automatically set to "user"
 - **Secure Login**: Credential-based authentication with JWT tokens
 - **Session Management**: Persistent sessions with NextAuth.js
 - **Protected Routes**: Bookmark functionality restricted to authenticated users
 
 ### ✅ User Experience
+
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Loading States**: Smooth loading indicators during API calls
 - **Error Feedback**: Clear error messages for failed operations
@@ -26,6 +29,7 @@ A comprehensive job board application with advanced bookmark functionality, buil
 ## 📋 Requirements Met
 
 ### ✅ Core Functionality
+
 - [x] Add bookmark toggle button to job position cards
 - [x] Implement bookmark logic using provided API endpoints
 - [x] Restrict bookmark functionality to authenticated users only
@@ -33,12 +37,14 @@ A comprehensive job board application with advanced bookmark functionality, buil
 - [x] Ensure user role is set to "user" (lowercase) during registration
 
 ### ✅ Testing Implementation
+
 - [x] Unit tests for bookmark functionality using Jest
 - [x] Component testing for job posting cards
 - [x] E2E tests for bookmark functionality using Cypress
 - [x] Test coverage for user interactions and error scenarios
 
 ### ✅ Code Quality
+
 - [x] Clean and well-structured code following best practices
 - [x] Proper error handling and user feedback
 - [x] Comprehensive documentation
@@ -46,17 +52,18 @@ A comprehensive job board application with advanced bookmark functionality, buil
 
 ## 🛠️ API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/bookmarks` | Get user's bookmarked jobs |
-| POST | `/bookmarks/:eventID` | Bookmark a job (empty body) |
-| DELETE | `/bookmarks/:eventID` | Remove bookmark from a job |
+| Method | Endpoint              | Description                 |
+| ------ | --------------------- | --------------------------- |
+| GET    | `/bookmarks`          | Get user's bookmarked jobs  |
+| POST   | `/bookmarks/:eventID` | Bookmark a job (empty body) |
+| DELETE | `/bookmarks/:eventID` | Remove bookmark from a job  |
 
 **Base URL**: `https://akil-backend.onrender.com/`
 
 ## 🧪 Testing
 
 ### Jest Unit Tests
+
 ```bash
 npm run test
 npm run test:watch
@@ -64,7 +71,8 @@ npm run test:coverage
 ```
 
 ### Cypress E2E Tests
-   ```bash
+
+```bash
 npm run test:e2e
 npm run test:e2e:open
 ```
@@ -72,45 +80,56 @@ npm run test:e2e:open
 ## 📸 Screenshots
 
 ### Home Page
-![Home Page](screenshots/home-page.png)
-*Landing page with authentication options and welcome message*
+
+![Home Page](public/img/homepage.jpg)
+_Landing page with authentication options and welcome message_
+
+### Login Page
+
+![Login Page](public/img/welcome.jpg)
 
 ### Opportunities Page
-![Opportunities Page](screenshots/opportunities-page.png)
-*Job listings with bookmark toggle buttons for authenticated users*
+
+![Opportunities Page](public/img/opportunity.jpg)
+_Job listings with bookmark toggle buttons for authenticated users_
+
+### Bookmarking Page
+
+![Bookmarking Page](public/img/bookmarkingauth.jpg)
+_User's bookmarked jobs with navigation options_
 
 ### Bookmarks Page
-![Bookmarks Page](screenshots/bookmarks-page.png)
-*User's bookmarked jobs with navigation options*
 
-### Authentication Flow
-![Authentication Flow](screenshots/auth-flow.png)
-*Sign in/sign up process with role assignment*
+![Bookmarks Page](public/img/bookmarked.jpg)
+_User's bookmarked jobs with navigation options_
+
+### Testing
+
+![Testing](public/img/cypresstesting.jpg)
+_STesting with Cypress_
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 
 ### Installation
-   ```bash
-# Clone the repository
-git clone <repository-url>
+
+```bash
+git clone https://github.com/annah11/A2SV-Project-phase.git>
 cd Final-Task
 
-# Install dependencies
 npm install
 
-# Set up environment variables
 cp .env.example .env.local
-# Add your NEXTAUTH_SECRET and other required variables
 
-# Run the development server
-   npm run dev
-   ```
+npm run dev
+```
 
 ### Environment Variables
+
 ```env
 NEXTAUTH_SECRET=your-secret-key-here
 NEXTAUTH_URL=http://localhost:3001
@@ -141,18 +160,21 @@ Final-Task/
 ## 🎯 Key Components
 
 ### Bookmark Component
+
 - Toggle button for bookmarking/unbookmarking jobs
 - Authentication state management
 - Error handling and user feedback
 - Loading states during API calls
 
 ### JobCard Component
+
 - Displays job information with bookmark integration
 - Responsive design for different screen sizes
 - Clickable elements for job details
 - Tag display for job categories
 
 ### Bookmarks Page
+
 - Lists all user's bookmarked jobs
 - Navigation back to home and opportunities
 - Empty state handling
@@ -180,14 +202,6 @@ Final-Task/
 - **Success Feedback**: Confirmation of successful actions
 - **Accessibility**: Keyboard navigation and screen reader support
 
-## 🚀 Deployment
-
-The application is ready for deployment with:
-- Optimized build process
-- Environment variable configuration
-- Error monitoring setup
-- Performance optimization
-
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -196,10 +210,6 @@ The application is ready for deployment with:
 4. Add tests for new functionality
 5. Submit a pull request
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
 ---
 
-**Built with ❤️ using Next.js, TypeScript, and NextAuth.js**
+**Built with ❤️ annah11**

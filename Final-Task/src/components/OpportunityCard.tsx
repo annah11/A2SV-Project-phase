@@ -1,7 +1,6 @@
 import Button from "./Buttons/Button";
 import { JobPost } from "@/type/type";
 import Image from "next/image";
-import Bookmark from "./Bookmark/Bookmarks";
 import Link from "next/link";
 
 type ExtendedJobPost = JobPost & {
@@ -10,10 +9,46 @@ type ExtendedJobPost = JobPost & {
   industry?: string;
 };
 
-function OpportunityCard({ data }: { data: ExtendedJobPost }) {
+export default function OpportunityCard({
+  data,
+  alwaysBookmarked = false,
+}: {
+  data: ExtendedJobPost;
+  alwaysBookmarked?: boolean;
+}) {
+  const isBookmarked = alwaysBookmarked ? true : data.isBookmarked;
+
   return (
-    <div className="w-full ...other-classes">
-      <div className="flex py-4 px-4 md:px-8 border-2 rounded-[30px] space-x-4 my-4  mx-auto items-start">
+    <div className="relative p-4 h-full">
+      <button
+        type="button"
+        data-id="bookmark-btn"
+        data-bookmarked={isBookmarked ? "true" : "false"}
+        className="absolute top-9 right-5 z-10"
+      >
+        {isBookmarked ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 384 512"
+            className="w-6 h-6 text-yellow-400"
+            fill="currentColor"
+          >
+            <path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 384 512"
+            className="w-6 h-6 text-yellow-700"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path d="M0 48C0 21.5 21.5 0 48 0l0 48 0 393.4 130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4 336 48 48 48 48 0 336 0c26.5 0 48 21.5 48 48l0 440c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488L0 48z" />
+          </svg>
+        )}
+      </button>
+      <div className="flex py-4 px-4 md:px-8 border-2 rounded-[30px] space-x-4 my-4 mx-auto items-start">
         <div className="w-[60px] h-[60px] flex-shrink-0 mt-1">
           <Link href={`/opportunities/${data.id}`}>
             <Image
@@ -27,14 +62,13 @@ function OpportunityCard({ data }: { data: ExtendedJobPost }) {
         </div>
 
         {/* Job Info */}
-        <div className=" space-y-2">
+        <div className="space-y-2">
           <div className="flex justify-between items-start">
             <Link href={`/opportunities/${data.id}`}>
               <h1 className="text-base font-semibold text-slate-800 line-clamp-2 hover:underline">
                 {data.title}
               </h1>
             </Link>
-            <Bookmark id={data.id} bookmarked={data.isBookmarked} />
           </div>
 
           <h3 className="text-xs text-slate-500 font-epilogue">
@@ -90,5 +124,3 @@ function OpportunityCard({ data }: { data: ExtendedJobPost }) {
     </div>
   );
 }
-
-export default OpportunityCard;

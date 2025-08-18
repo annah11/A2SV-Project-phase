@@ -21,19 +21,19 @@ export default function Header({ count }: { count: number }) {
     >
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-4xl font-extrabold text-indigo-900 mb-1">
+          <h1 className="text-2xl font-bold text-indigo-900 mb-1">
             Opportunities
           </h1>
           <p className="text-md text-slate-500">Showing {count} results</p>
           {user?.name && (
-            <p className="mt-2 text-md text-indigo-700 font-medium">
+            <p className="mt-2 text-md text-indigo-600 font-medium">
               Welcome, <span className="font-semibold">{user.name}</span> 👋
             </p>
           )}
         </div>
 
         <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 rounded-lg ">
             <span className="text-sm text-slate-500 font-medium">
               Sorted by:
             </span>
@@ -42,13 +42,13 @@ export default function Header({ count }: { count: number }) {
 
           {user ? (
             <Menu as="div" className="relative inline-block text-left">
-              <Menu.Button className="flex items-center gap-2 px-3 py-2 bg-white rounded-full shadow hover:shadow-md transition border">
+              <Menu.Button className="flex items-center gap-2 px-3 py-2 rounded-full transition-border hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200">
                 <img
                   src={user.image || "/mine.png"}
                   alt="profile"
-                  className="w-8 h-8 rounded-full object-cover"
+                  className="w-11 h-11 rounded-full object-cover whitespace-nowrap"
                 />
-                <ChevronDown size={16} className="text-slate-600" />
+                <ChevronDown size={16} className="text-slate-300" />
               </Menu.Button>
 
               <Transition
@@ -89,7 +89,9 @@ export default function Header({ count }: { count: number }) {
                     <Menu.Item>
                       {({ active }) => (
                         <button
-                          onClick={() => signOut({ callbackUrl: "/" })}
+                          onClick={() =>
+                            signOut({ callbackUrl: "/opportunities" })
+                          }
                           className={`${
                             active ? "bg-red-100 text-red-700" : "text-red-600"
                           } group flex items-center gap-2 w-full px-4 py-2 text-sm rounded-lg`}

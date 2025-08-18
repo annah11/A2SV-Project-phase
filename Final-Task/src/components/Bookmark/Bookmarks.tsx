@@ -22,7 +22,7 @@ export default function Bookmark({
 
     if (status === "loading") return;
     if (status === "unauthenticated" || !session) {
-      signIn(); // open provider page, no manual router push
+      signIn();
       return;
     }
     if (isLoading) return;
@@ -30,12 +30,10 @@ export default function Bookmark({
     setFeedback(null);
     setIsLoading(true);
     const prev = isBookmarked;
-    setIsBookmarked(!prev); // optimistic
+    setIsBookmarked(!prev);
     try {
       const res = await toggleBookmark(id, prev);
       if ((res as any)?.conflict) {
-        // Already in desired state – keep optimistic
-        // Optionally setIsBookmarked(!prev) again (no-op)
       }
       setFeedback("Bookmark updated!");
     } catch (e: any) {
@@ -77,16 +75,16 @@ export default function Bookmark({
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 384 512"
-            className="w-5 h-6 text-yellow-700"
+            className="w-5 h-6 text-yellow-400"
             fill="currentColor"
           >
             <path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" />
           </svg>
         )}
       </button>
-      {feedback && (
-        <span className="text-xs text-red-600 mt-1">{feedback}</span>
-      )}
+      {/* {feedback && (
+        <span className="text-xs text-green-600 mt-1">{feedback}</span>
+      )} */}
     </>
   );
 }

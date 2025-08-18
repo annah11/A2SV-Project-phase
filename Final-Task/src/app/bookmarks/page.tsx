@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import OpportunityCard from "@/components/OpportunityCard";
 import { getBookmarksRaw, normalizeBookmark } from "@/lib/api/bookmarks";
+import { BookMarked } from "lucide-react";
 
 export default function BookmarksPage() {
   const { data: session, status } = useSession();
@@ -91,7 +92,7 @@ export default function BookmarksPage() {
     <div className="max-w-6xl mx-auto px-2 sm:px-4 md:px-6 py-4">
       <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
         <div className="w-full sm:w-auto text-center sm:text-left">
-          <h1 className="text-2xl sm:text-3xl font-bold text-indigo-900 mb-2">
+          <h1 className="text-2xl sm:text-2xl font-bold text-indigo-900 mb-2">
             My Bookmarked Opportunities
           </h1>
           {bookmarks.length > 0 && (
@@ -102,8 +103,8 @@ export default function BookmarksPage() {
           )}
         </div>
         <Link
-          href="/"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition text-base sm:text-lg w-full sm:w-auto justify-center"
+          href="/opportunities"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white font-semibold rounded-xl transition text-base sm:text-lg w-full sm:w-auto justify-center"
         >
           <svg
             className="w-4 h-4"
@@ -137,10 +138,12 @@ export default function BookmarksPage() {
       )}
 
       {!error && bookmarks.length > 0 && (
-        <div className="max-w-3xl mx-auto px-2 sm:px-4 md:px-0">
-          <div className="grid gap-6 grid-cols-1">
+        <div className="max-w-6xl mx-auto px-2 sm:px-4 md:px-6 py-4">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {bookmarks.map((b) => (
-              <OpportunityCard key={b.id} data={b} />
+              <div key={b.id} className=" ">
+                <OpportunityCard data={b} alwaysBookmarked />
+              </div>
             ))}
           </div>
         </div>
