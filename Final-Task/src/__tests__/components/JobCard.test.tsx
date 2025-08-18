@@ -14,21 +14,21 @@ jest.mock('@/components/Bookmark/Bookmarks', () => {
   };
 });
 
-describe('JobCard Component', () => {
-  const mockJobData: JobPost = {
-    id: 'test-job-1',
-    title: 'Software Developer',
-    description: 'We are looking for a talented software developer to join our team.',
-    location: 'Addis Ababa, Ethiopia',
-    companyName: 'Tech Company',
-    logoUrl: '/test-logo.png',
-    type: 'Full-time',
-    category: 'Technology',
-    industry: 'Software',
-    viewsCount: 150,
-    isBookmarked: false,
-  };
+const mockJobData: JobPost = {
+  id: 'test-job-1',
+  title: 'Software Developer',
+  description: 'We are looking for a talented software developer to join our team.',
+  location: ['Addis Ababa, Ethiopia'],
+  companyName: 'Tech Company',
+  logoUrl: '/test-logo.png',
+  type: 'Full-time',
+  category: 'Technology',
+  industry: 'Software',
+  viewsCount: 150,
+  isBookmarked: false,
+};
 
+describe('JobCard Component', () => {
   it('renders job card with all required information', () => {
     render(<JobCard data={mockJobData} />);
     
@@ -118,4 +118,4 @@ describe('JobCard Component', () => {
     const viewsContainer = screen.getByText('150').closest('div');
     expect(viewsContainer).toHaveClass('flex', 'items-center', 'text-slate-800');
   });
-}); 
+});

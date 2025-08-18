@@ -1,0 +1,20 @@
+test('example test case 1', () => {
+	expect(true).toBe(true);
+});
+
+test('example test case 2', () => {
+	const sum = (a, b) => a + b;
+	expect(sum(1, 2)).toBe(3);
+});
+
+describe('Array methods', () => {
+	test('should return the correct length', () => {
+		const arr = [1, 2, 3];
+		expect(arr.length).toBe(3);
+	});
+
+	test('should include the element', () => {
+		const arr = [1, 2, 3];
+		expect(arr).toContain(2);
+	});
+});

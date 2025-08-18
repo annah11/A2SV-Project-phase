@@ -4,20 +4,15 @@ import userEvent from "@testing-library/user-event";
 import Bookmark from "@/components/Bookmark/Bookmarks";
 import { useSession } from "next-auth/react";
 
-// Mock the toggleBookmark function
 jest.mock("@/app/api/actions/toggleBookmark.ts", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
 
-const mockToggleBookmark =
-  require("@/app/api/actions/toggleBookmark.ts").default;
+const mockToggleBookmark = require("@/app/api/actions/toggleBookmark.ts").default;
 
 describe("Bookmark Component", () => {
   const mockUseSession = useSession as jest.MockedFunction<typeof useSession>;
-  const mockRouter = {
-    refresh: jest.fn(),
-  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -50,99 +45,56 @@ describe("Bookmark Component", () => {
     expect(bookmarkButton).toHaveAttribute("data-bookmarked", "true");
   });
 
-  it("shows alert when user is not authenticated", async () => {
-    const user = userEvent.setup();
-    const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
-
+  it("shows sign in for unauthenticated user", async () => {
     render(<Bookmark id="test-id" bookmarked={false} />);
-
-    const bookmarkButton = screen.getByRole("button");
-    await user.click(bookmarkButton);
-
-    expect(alertSpy).toHaveBeenCalledWith(
-      "Please sign in to bookmark opportunities"
-    );
-    alertSpy.mockRestore();
+    fireEvent.click(screen.getByRole("button"));
+    expect(screen.getByText(/sign in/i)).toBeInTheDocument();
   });
 
-  it("calls toggleBookmark when user is authenticated", async () => {
-    const user = userEvent.setup();
+  it("calls toggleBookmark and shows success", async () => {
     mockUseSession.mockReturnValue({
-      data: { user: { name: "Test User" } },
+      data: { user: { name: "Test User" }, accessToken: "tok" },
       status: "authenticated",
     });
-    mockToggleBookmark.mockResolvedValue({ success: true });
+    mockToggleBookmark.mockResolvedValue({ status: "added" });
 
     render(<Bookmark id="test-id" bookmarked={false} />);
-
-    const bookmarkButton = screen.getByRole("button");
-    await user.click(bookmarkButton);
+    fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(mockToggleBookmark).toHaveBeenCalledWith("test-id", false);
+      expect(mockToggleBookmark).toHaveBeenCalledWith("test-id", false, "tok");
+      expect(screen.getByText(/bookmark updated/i)).toBeInTheDocument();
     });
   });
 
-  it("handles successful bookmark toggle", async () => {
-    const user = userEvent.setup();
+  it("shows error feedback on failure", async () => {
     mockUseSession.mockReturnValue({
-      data: { user: { name: "Test User" } },
-      status: "authenticated",
-    });
-    mockToggleBookmark.mockResolvedValue({ success: true });
-
-    render(<Bookmark id="test-id" bookmarked={false} />);
-
-    const bookmarkButton = screen.getByRole("button");
-    await user.click(bookmarkButton);
-
-    await waitFor(() => {
-      expect(mockToggleBookmark).toHaveBeenCalledWith("test-id", false);
-    });
-  });
-
-  it("handles failed bookmark toggle", async () => {
-    const user = userEvent.setup();
-    const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
-    mockUseSession.mockReturnValue({
-      data: { user: { name: "Test User" } },
-      status: "authenticated",
-    });
-    mockToggleBookmark.mockResolvedValue(null);
-
-    render(<Bookmark id="test-id" bookmarked={false} />);
-
-    const bookmarkButton = screen.getByRole("button");
-    await user.click(bookmarkButton);
-
-    await waitFor(() => {
-      expect(alertSpy).toHaveBeenCalledWith(
-        "Failed to update bookmark. Please try again."
-      );
-    });
-    alertSpy.mockRestore();
-  });
-
-  it("handles toggle error", async () => {
-    const user = userEvent.setup();
-    const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
-    mockUseSession.mockReturnValue({
-      data: { user: { name: "Test User" } },
+      data: { user: { name: "Test User" }, accessToken: "tok" },
       status: "authenticated",
     });
     mockToggleBookmark.mockRejectedValue(new Error("Network error"));
 
     render(<Bookmark id="test-id" bookmarked={false} />);
-
-    const bookmarkButton = screen.getByRole("button");
-    await user.click(bookmarkButton);
+    fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(alertSpy).toHaveBeenCalledWith(
-        "Failed to update bookmark. Please try again."
-      );
+      expect(screen.getByText(/failed to update bookmark/i)).toBeInTheDocument();
     });
-    alertSpy.mockRestore();
+  });
+
+  it("disables button during loading", async () => {
+    mockUseSession.mockReturnValue({
+      data: { user: { name: "Test User" }, accessToken: "tok" },
+      status: "authenticated",
+    });
+    mockToggleBookmark.mockImplementation(
+      () => new Promise((resolve) => setTimeout(resolve, 100))
+    );
+
+    render(<Bookmark id="test-id" bookmarked={false} />);
+    const button = screen.getByRole("button");
+    fireEvent.click(button);
+    expect(button).toBeDisabled();
   });
 
   it("disables button during loading state", async () => {

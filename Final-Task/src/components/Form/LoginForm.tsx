@@ -117,6 +117,7 @@ function LoginForm(req: any) {
           type="submit"
           id="submit"
           className="w-full bg-indigo-900 text-white rounded-3xl py-2 font-epilogue font-[700] mt-5 hover:bg-indigo-800 transition-all duration-500"
+          data-id="signin-btn"
         >
           Login
         </button>

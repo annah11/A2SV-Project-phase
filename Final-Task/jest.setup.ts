@@ -1,3 +1,4 @@
+import React from "react";
 import "@testing-library/jest-dom";
 
 // Mock Next.js router
@@ -17,13 +18,15 @@ jest.mock("next/navigation", () => ({
 }));
 
 // Mock Next.js Image component
-jest.mock("next/image", () => ({
-  __esModule: true,
-  default: (props) => {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} />;
-  },
-}));
+jest.mock("next/image", () => {
+  const React = require("react");
+  return {
+    __esModule: true,
+    default: (props: any) => {
+      return React.createElement("img", props);
+    },
+  };
+});
 
 // Mock NextAuth
 jest.mock("next-auth/react", () => ({
@@ -44,12 +47,29 @@ jest.mock("axios", () => ({
 }));
 
 // Mock framer-motion
-jest.mock("framer-motion", () => ({
-  motion: {
-    div: ({ children, ...props }) => <div {...props}>{children}</div>,
-    button: ({ children, ...props }) => <button {...props}>{children}</button>,
-  },
-}));
+jest.mock("framer-motion", () => {
+  const React = require("react");
+  return {
+    motion: {
+      div: ({
+        children,
+        ...props
+      }: {
+        children?: React.ReactNode;
+      } & React.HTMLAttributes<HTMLDivElement>) => {
+        return React.createElement("div", props, children);
+      },
+      button: ({
+        children,
+        ...props
+      }: {
+        children?: React.ReactNode;
+      } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+        return React.createElement("button", props, children);
+      },
+    },
+  };
+});
 
 // Global test utilities
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
