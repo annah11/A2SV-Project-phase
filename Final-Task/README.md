@@ -1,4 +1,4 @@
-# 🔐 JobBoard - Bookmark Functionality
+# 👩‍💼 JobBoard - Bookmark Functionality
 
 A comprehensive job board application with advanced bookmark functionality, built with Next.js, TypeScript, and NextAuth.js.
 
